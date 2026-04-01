@@ -24,6 +24,12 @@
 .DS_Store
 *.pem
 
+# IDE / editor
+.vs/
+
+# claude code
+.claude/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

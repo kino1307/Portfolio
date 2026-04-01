@@ -27,14 +27,14 @@ const themeScript = `
 
 export const metadata: Metadata = {
     title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
-    description: "William (Will) Leece – UK-based full-stack developer specialising in .NET, C#, and modern web technologies. Building scalable, user-friendly applications.",
+    description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
     keywords: ["William Leece", "Will Leece", "Full-Stack Developer", "Software Engineer", "Portfolio", ".NET", "C#", "ASP.NET Core", "Next.js", "Tailwind CSS", "UK Developer"],
     authors: [{ name: "William Leece", url: "https://wjleece.dev" }],
     creator: "William Leece",
     publisher: "William Leece",
     openGraph: {
         title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
-        description: "William (Will) Leece – UK-based full-stack developer specialising in .NET, C#, and modern web technologies.",
+        description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
         url: "https://wjleece.dev/",
         siteName: "wjleece.dev",
         type: "website",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary",
         title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
-        description: "William (Will) Leece – UK-based full-stack developer specialising in .NET, C#, and modern web technologies.",
+        description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
     },
     alternates: {
         canonical: "https://wjleece.dev/"

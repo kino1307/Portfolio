@@ -26,14 +26,14 @@ const themeScript = `
 `;
 
 export const metadata: Metadata = {
-    title: "William Leece | Full-Stack Developer Portfolio",
+    title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
     description: "William (Will) Leece – UK-based full-stack developer specialising in .NET, C#, and modern web technologies. Building scalable, user-friendly applications.",
     keywords: ["William Leece", "Will Leece", "Full-Stack Developer", "Software Engineer", "Portfolio", ".NET", "C#", "ASP.NET Core", "Next.js", "Tailwind CSS", "UK Developer"],
     authors: [{ name: "William Leece", url: "https://wjleece.dev" }],
     creator: "William Leece",
     publisher: "William Leece",
     openGraph: {
-        title: "William Leece | Full-Stack Developer",
+        title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
         description: "William (Will) Leece – UK-based full-stack developer specialising in .NET, C#, and modern web technologies.",
         url: "https://wjleece.dev/",
         siteName: "wjleece.dev",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary",
-        title: "William Leece | Full-Stack Developer",
+        title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
         description: "William (Will) Leece – UK-based full-stack developer specialising in .NET, C#, and modern web technologies.",
     },
     alternates: {

@@ -27,17 +27,17 @@ const themeScript = `
 `;
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://www.wjleece.dev"),
+    metadataBase: new URL("https://wjleece.dev"),
     title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
     description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
     keywords: ["William Leece", "Will Leece", "Full-Stack Developer", "Software Engineer", "Portfolio", ".NET", "C#", "ASP.NET Core", "Next.js", "Tailwind CSS", "UK Developer"],
-    authors: [{ name: "William Leece", url: "https://www.wjleece.dev" }],
+    authors: [{ name: "William Leece", url: "https://wjleece.dev" }],
     creator: "William Leece",
     publisher: "William Leece",
     openGraph: {
         title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
         description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
-        url: "https://www.wjleece.dev/",
+        url: "https://wjleece.dev/",
         siteName: "wjleece.dev",
         type: "website",
         images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         images: ["/opengraph-image"],
     },
     alternates: {
-        canonical: "https://www.wjleece.dev/"
+        canonical: "https://wjleece.dev/"
     },
     robots: {
         index: true,

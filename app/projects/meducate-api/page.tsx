@@ -5,12 +5,12 @@ export const metadata: Metadata = {
     title: "Meducate API — Medical Data REST API Case Study | Will Leece",
     description: "A REST API delivering structured, ICD-10 classified medical data from MedlinePlus and PubMed. Built with .NET 10, Blazor Server, PostgreSQL, and Semantic Kernel.",
     alternates: {
-        canonical: "https://www.wjleece.dev/projects/meducate-api",
+        canonical: "https://wjleece.dev/projects/meducate-api",
     },
     openGraph: {
         title: "Meducate API — Medical Data REST API Case Study | Will Leece",
         description: "A REST API delivering structured, ICD-10 classified medical data from MedlinePlus and PubMed. Built with .NET 10, Blazor Server, PostgreSQL, and Semantic Kernel.",
-        url: "https://www.wjleece.dev/projects/meducate-api",
+        url: "https://wjleece.dev/projects/meducate-api",
         type: "article",
     },
 };
@@ -25,7 +25,7 @@ const jsonLd = {
     "author": {
         "@type": "Person",
         "name": "Will Leece",
-        "url": "https://www.wjleece.dev"
+        "url": "https://wjleece.dev"
     },
     "url": "https://meducateapi.com",
 };

@@ -43,7 +43,7 @@ export default function Home() {
         "@type": "Person",
         "name": "William Leece",
         "alternateName": "Will Leece",
-        "url": "https://www.wjleece.dev",
+        "url": "https://wjleece.dev",
         "jobTitle": "Full-Stack Developer",
         "worksFor": {
             "@type": "Organization",

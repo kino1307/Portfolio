@@ -27,26 +27,29 @@ const themeScript = `
 `;
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://www.wjleece.dev"),
     title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
     description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
     keywords: ["William Leece", "Will Leece", "Full-Stack Developer", "Software Engineer", "Portfolio", ".NET", "C#", "ASP.NET Core", "Next.js", "Tailwind CSS", "UK Developer"],
-    authors: [{ name: "William Leece", url: "https://wjleece.dev" }],
+    authors: [{ name: "William Leece", url: "https://www.wjleece.dev" }],
     creator: "William Leece",
     publisher: "William Leece",
     openGraph: {
         title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
         description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
-        url: "https://wjleece.dev/",
+        url: "https://www.wjleece.dev/",
         siteName: "wjleece.dev",
         type: "website",
+        images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
     },
     twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK",
         description: "Will Leece – UK-based full-stack .NET developer. ASP.NET Core, C#, Blazor, SignalR, and Semantic Kernel.",
+        images: ["/opengraph-image"],
     },
     alternates: {
-        canonical: "https://wjleece.dev/"
+        canonical: "https://www.wjleece.dev/"
     },
     robots: {
         index: true,

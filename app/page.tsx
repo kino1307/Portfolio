@@ -2,14 +2,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Mail, FileText, ChevronDown, ChevronUp } from "lucide-react";
+import { Sun, Moon, Mail, FileText } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 
 export default function Home() {
     const [darkMode, setDarkMode] = useState(true);
-    const [meducateExpanded, setMeducateExpanded] = useState(false);
     const isFirstRender = useRef(true);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export default function Home() {
         "@type": "Person",
         "name": "William Leece",
         "alternateName": "Will Leece",
-        "url": "https://wjleece.dev",
+        "url": "https://www.wjleece.dev",
         "jobTitle": "Full-Stack Developer",
         "worksFor": {
             "@type": "Organization",
@@ -198,88 +198,12 @@ export default function Home() {
                     </div>
                     <span className="inline-block text-sm text-muted-foreground italic mb-4">meducateapi.com — currently under development</span>
 
-                    <button
-                        onClick={() => setMeducateExpanded(!meducateExpanded)}
-                        className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition cursor-pointer mt-4"
+                    <Link
+                        href="/projects/meducate-api"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition mt-4"
                     >
-                        {meducateExpanded ? "Hide" : "Read"} case study
-                        {meducateExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
-
-                    {meducateExpanded && (
-                        <div className="mt-6 space-y-6 text-muted-foreground border-t border-border pt-6">
-                            <div>
-                                <h4 className="text-lg font-semibold text-foreground mb-2">The Problem</h4>
-                                <p>
-                                    Medical reference data from sources like MedlinePlus (U.S. National Library of Medicine,
-                                    2,000+ health topics) and PubMed is unstructured and inconsistent — each source uses
-                                    different formats, update cycles, and access methods. A single condition like Type 2
-                                    Diabetes might appear across multiple providers with conflicting field names, missing
-                                    symptoms, or outdated treatment info. Developers building health education tools end up
-                                    writing brittle scrapers and hand-rolled parsers that break every time an upstream source
-                                    changes, duplicating effort that could be solved once at the infrastructure level.
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 className="text-lg font-semibold text-foreground mb-2">Architecture &amp; Tech Decisions</h4>
-                                <p className="mb-3">
-                                    Meducate follows Clean Architecture across four layers — Domain, Application,
-                                    Infrastructure, and Presentation — so the data providers, LLM processor, and persistence
-                                    layer can each be replaced independently. It ships as a .NET 10 monolith deployed on
-                                    Railway, keeping operational complexity low while the product is in its early stage.
-                                </p>
-                                <ul className="list-disc list-inside space-y-2">
-                                    <li>
-                                        <strong className="text-foreground">LLM ingestion pipeline</strong> — Hangfire runs
-                                        two daily jobs: a <em>TopicDiscoveryJob</em> at 2 AM UTC fetches new topics from
-                                        MedlinePlus and PubMed, then an LLM classification step (Semantic Kernel + OpenAI GPT-4)
-                                        assigns each topic an ICD-10 category (one of 24 standardised medical categories) and
-                                        a type (Disease, Drug, Procedure, Symptom, etc.). A second extraction pass pulls out
-                                        structured fields — summary, symptoms, causes, treatments, and citations — before a
-                                        quality-control stage handles synonym merging and field validation. Existing topics are
-                                        re-processed at 3 AM UTC so the data stays current. Semantic Kernel was chosen over direct
-                                        SDK calls because it provides prompt orchestration and makes it easy to swap models or
-                                        add prompt filters without touching business logic.
-                                    </li>
-                                    <li>
-                                        <strong className="text-foreground">Blazor Server dashboard</strong> — The developer
-                                        portal uses passwordless magic-link authentication (emails sent via Resend API) with
-                                        cookie-based sessions. Users create an organisation, generate up to 5 API keys, and
-                                        monitor usage through a real-time dashboard. Keeping the front-end in Blazor means the
-                                        entire stack is C# with shared models between the API and UI.
-                                    </li>
-                                    <li>
-                                        <strong className="text-foreground">PostgreSQL + EF Core</strong> — All normalised
-                                        medical data, user accounts, organisations, and usage metrics live in PostgreSQL 16
-                                        via Entity Framework Core (Npgsql). Hangfire also uses PostgreSQL-backed persistence,
-                                        meaning background jobs survive restarts and failures can be retried from the built-in
-                                        dashboard.
-                                    </li>
-                                    <li>
-                                        <strong className="text-foreground">Minimal API surface</strong> — The public API
-                                        exposes topic endpoints ({`/api/topics`}, {`/api/topics/search`}, {`/api/topics/{name}`})
-                                        with API-key auth via {`X-Api-Key`} header and two-tier rate limiting: 60 requests/min
-                                        per key plus a configurable daily cap with 80% usage alerts. Response schemas adapt to
-                                        topic type — a Disease returns symptoms, causes, and treatments, while a Symptom returns
-                                        related symptoms, associated conditions, and management. Topics that are removed by all
-                                        upstream providers are automatically removed from the API.
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="text-lg font-semibold text-foreground mb-2">Outcome</h4>
-                                <p>
-                                    Meducate currently ingests and classifies 2,000+ health topics from MedlinePlus and PubMed,
-                                    each with structured summaries, symptoms, causes, treatments, and citations — all classified
-                                    under ICD-10 categories and refreshed daily without manual intervention. The developer portal
-                                    provides self-service onboarding: request a magic link, create an organisation, generate an API
-                                    key, and start querying structured medical data in minutes.
-                                </p>
-                            </div>
-                        </div>
-                    )}
+                        Read case study →
+                    </Link>
                 </div>
 
                 <div className="bg-card border border-border rounded-lg p-6 shadow-lg hover:shadow-xl transition">

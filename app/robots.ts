@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: "*",
             allow: "/",
         },
-        sitemap: "https://wjleece.dev/sitemap.xml",
+        sitemap: "https://www.wjleece.dev/sitemap.xml",
     };
 }

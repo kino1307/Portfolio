@@ -200,7 +200,7 @@ export default function Home() {
 
                     <Link
                         href="/projects/meducate-api"
-                        className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition mt-4"
+                        className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition mt-4"
                     >
                         Read case study →
                     </Link>

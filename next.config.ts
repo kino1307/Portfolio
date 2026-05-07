@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/gallery.php",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };

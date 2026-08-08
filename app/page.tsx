@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, Mail, FileText, ChevronDown, ChevronUp } from "lucide-react";
 import { SiGithub } from "react-icons/si";
@@ -203,13 +204,21 @@ export default function Home() {
                         <span className="text-sm text-muted-foreground">Free tier: 1,000 req/day · no credit card</span>
                     </div>
 
-                    <button
-                        onClick={() => setMeducateExpanded(!meducateExpanded)}
-                        className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition cursor-pointer mt-4"
-                    >
-                        {meducateExpanded ? "Hide" : "Read"} case study
-                        {meducateExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
+                    <div className="flex items-center gap-4 mt-4">
+                        <button
+                            onClick={() => setMeducateExpanded(!meducateExpanded)}
+                            className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition cursor-pointer"
+                        >
+                            {meducateExpanded ? "Hide" : "Read"} case study
+                            {meducateExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                        </button>
+                        <Link
+                            href="/projects/meducate-api"
+                            className="text-sm font-medium text-muted-foreground hover:text-foreground transition underline"
+                        >
+                            Full case study page →
+                        </Link>
+                    </div>
 
                     {meducateExpanded && (
                         <div className="mt-6 space-y-6 text-muted-foreground border-t border-border pt-6">

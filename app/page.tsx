@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, Mail, FileText, ChevronDown, ChevronUp } from "lucide-react";
 import { SiGithub } from "react-icons/si";
@@ -10,17 +10,14 @@ import { FaLinkedin } from "react-icons/fa";
 export default function Home() {
     const [darkMode, setDarkMode] = useState(true);
     const [meducateExpanded, setMeducateExpanded] = useState(false);
-    const isFirstRender = useRef(true);
 
     useEffect(() => {
         const saved = localStorage.getItem("darkMode");
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setDarkMode(saved === null || saved === "true");
-        isFirstRender.current = false;
     }, []);
 
     useEffect(() => {
-        if (isFirstRender.current) return;
         document.documentElement.classList.toggle("dark", darkMode);
         localStorage.setItem("darkMode", String(darkMode));
     }, [darkMode]);
@@ -32,8 +29,8 @@ export default function Home() {
             desc: [
                 "Build bespoke features across internal and customer-facing CRUD applications using ASP.NET Core, C#, and EF Core.",
                 "Develop live, interactive wallboards powered by SignalR for real-time operational visibility.",
-                "Implement AI-driven automation with Semantic Kernel, working within an AI coding agent architecture using vertical slicing and shared context files.",
-                "Author bespoke reports for recurring operational issues and data forensics, turning manual investigation into repeatable tooling."
+                "Implement AI automation with Semantic Kernel inside an agent architecture built on vertical slicing and shared context files.",
+                "Author bespoke reports for recurring operational issues and data forensics that turn manual investigation into repeatable tooling."
             ]
         }
     ];
@@ -186,7 +183,7 @@ export default function Home() {
                         <h3 className="text-xl font-bold mb-2">Meducate API</h3>
                     </a>
                     <p className="text-muted-foreground mb-4">
-                        A REST API that ingests medical data from MedlinePlus and PubMed, uses an LLM to classify and structure it under ICD-10 categories, and serves it through a clean, versioned interface — refreshed daily.
+                        A REST API that ingests medical data from MedlinePlus and PubMed, uses an LLM to classify and structure it under ICD-10 categories, and serves it through a versioned interface refreshed daily. Nightly quality-control jobs check that AI-generated summaries haven&apos;t drifted from their source material and flag any that have for re-processing.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">.NET 10</span>
@@ -196,7 +193,15 @@ export default function Home() {
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Hangfire</span>
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Railway</span>
                     </div>
-                    <span className="inline-block text-sm text-muted-foreground italic mb-4">meducateapi.com — currently under development</span>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
+                        <a href="https://meducateapi.com/docs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
+                            Try with demo key →
+                        </a>
+                        <a href="https://github.com/kino1307/MeducateAPI" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-1">
+                            <SiGithub className="w-3.5 h-3.5" /> GitHub
+                        </a>
+                        <span className="text-sm text-muted-foreground">Free tier: 1,000 req/day · no credit card</span>
+                    </div>
 
                     <button
                         onClick={() => setMeducateExpanded(!meducateExpanded)}
@@ -212,58 +217,65 @@ export default function Home() {
                                 <h4 className="text-lg font-semibold text-foreground mb-2">The Problem</h4>
                                 <p>
                                     Medical reference data from sources like MedlinePlus (U.S. National Library of Medicine,
-                                    2,000+ health topics) and PubMed is unstructured and inconsistent — each source uses
+                                    2,000+ health topics) and PubMed is unstructured and inconsistent. Each source uses
                                     different formats, update cycles, and access methods. A single condition like Type 2
                                     Diabetes might appear across multiple providers with conflicting field names, missing
                                     symptoms, or outdated treatment info. Developers building health education tools end up
                                     writing brittle scrapers and hand-rolled parsers that break every time an upstream source
-                                    changes, duplicating effort that could be solved once at the infrastructure level.
+                                    changes. It&apos;s a problem most teams solve independently, when a single fix at the
+                                    infrastructure level would cover all of them.
                                 </p>
                             </div>
 
                             <div>
                                 <h4 className="text-lg font-semibold text-foreground mb-2">Architecture &amp; Tech Decisions</h4>
                                 <p className="mb-3">
-                                    Meducate follows Clean Architecture across four layers — Domain, Application,
-                                    Infrastructure, and Presentation — so the data providers, LLM processor, and persistence
-                                    layer can each be replaced independently. It ships as a .NET 10 monolith deployed on
-                                    Railway, keeping operational complexity low while the product is in its early stage.
+                                    Meducate follows Clean Architecture across four layers (Domain, Application,
+                                    Infrastructure, and Presentation) so the data providers, LLM processor, and persistence
+                                    layer can each be replaced independently. It ships as a .NET 10 monolith on Railway,
+                                    which keeps operational complexity low while the product is early stage.
                                 </p>
                                 <ul className="list-disc list-inside space-y-2">
                                     <li>
-                                        <strong className="text-foreground">LLM ingestion pipeline</strong> — Hangfire runs
-                                        two daily jobs: a <em>TopicDiscoveryJob</em> at 2 AM UTC fetches new topics from
+                                        <strong className="text-foreground">LLM ingestion pipeline</strong>: Hangfire runs
+                                        two daily jobs. A <em>TopicDiscoveryJob</em> at 2 AM UTC fetches new topics from
                                         MedlinePlus and PubMed, then an LLM classification step (Semantic Kernel + OpenAI GPT-4)
                                         assigns each topic an ICD-10 category (one of 24 standardised medical categories) and
                                         a type (Disease, Drug, Procedure, Symptom, etc.). A second extraction pass pulls out
-                                        structured fields — summary, symptoms, causes, treatments, and citations — before a
-                                        quality-control stage handles synonym merging and field validation. Existing topics are
-                                        re-processed at 3 AM UTC so the data stays current. Semantic Kernel was chosen over direct
-                                        SDK calls because it provides prompt orchestration and makes it easy to swap models or
-                                        add prompt filters without touching business logic.
+                                        structured fields: summary, symptoms, causes, treatments, and citations. Existing topics
+                                        are re-processed at 3 AM UTC so the data stays current. Semantic Kernel was chosen over
+                                        direct SDK calls because it handles prompt orchestration and makes it easy to swap models
+                                        or add prompt filters without touching business logic.
                                     </li>
                                     <li>
-                                        <strong className="text-foreground">Blazor Server dashboard</strong> — The developer
+                                        <strong className="text-foreground">Automated quality control</strong>: after each
+                                        nightly ingest, a QC job re-fetches the canonical source content for every topic and
+                                        compares the LLM-generated summary against the current upstream text. Summaries where
+                                        semantic drift exceeds a configurable threshold are flagged and queued for re-processing
+                                        rather than served stale. A model change, prompt update, or upstream content edit
+                                        can&apos;t silently corrupt the API&apos;s data. Regressions surface before they reach consumers.
+                                    </li>
+                                    <li>
+                                        <strong className="text-foreground">Blazor Server dashboard</strong>: the developer
                                         portal uses passwordless magic-link authentication (emails sent via Resend API) with
-                                        cookie-based sessions. Users create an organisation, generate up to 5 API keys, and
-                                        monitor usage through a real-time dashboard. Keeping the front-end in Blazor means the
-                                        entire stack is C# with shared models between the API and UI.
+                                        cookie-based sessions. Users can create an organisation, generate up to five API keys,
+                                        and monitor usage through a real-time dashboard. The front-end runs in Blazor, which
+                                        keeps the entire stack in C# with shared models between the API and UI.
                                     </li>
                                     <li>
-                                        <strong className="text-foreground">PostgreSQL + EF Core</strong> — All normalised
+                                        <strong className="text-foreground">PostgreSQL + EF Core</strong>: all normalised
                                         medical data, user accounts, organisations, and usage metrics live in PostgreSQL 16
-                                        via Entity Framework Core (Npgsql). Hangfire also uses PostgreSQL-backed persistence,
-                                        meaning background jobs survive restarts and failures can be retried from the built-in
-                                        dashboard.
+                                        via Entity Framework Core (Npgsql). Hangfire also uses PostgreSQL for persistence,
+                                        so background jobs survive restarts and can be retried from the built-in dashboard.
                                     </li>
                                     <li>
-                                        <strong className="text-foreground">Minimal API surface</strong> — The public API
+                                        <strong className="text-foreground">Minimal API surface</strong>: the public API
                                         exposes topic endpoints ({`/api/topics`}, {`/api/topics/search`}, {`/api/topics/{name}`})
                                         with API-key auth via {`X-Api-Key`} header and two-tier rate limiting: 60 requests/min
                                         per key plus a configurable daily cap with 80% usage alerts. Response schemas adapt to
-                                        topic type — a Disease returns symptoms, causes, and treatments, while a Symptom returns
-                                        related symptoms, associated conditions, and management. Topics that are removed by all
-                                        upstream providers are automatically removed from the API.
+                                        topic type: a Disease returns symptoms, causes, and treatments, while a Symptom returns
+                                        related symptoms, associated conditions, and management. Topics dropped by all upstream
+                                        providers are retired from the API.
                                     </li>
                                 </ul>
                             </div>
@@ -271,30 +283,19 @@ export default function Home() {
                             <div>
                                 <h4 className="text-lg font-semibold text-foreground mb-2">Outcome</h4>
                                 <p>
-                                    Meducate currently ingests and classifies 2,000+ health topics from MedlinePlus and PubMed,
-                                    each with structured summaries, symptoms, causes, treatments, and citations — all classified
-                                    under ICD-10 categories and refreshed daily without manual intervention. The developer portal
-                                    provides self-service onboarding: request a magic link, create an organisation, generate an API
-                                    key, and start querying structured medical data in minutes.
+                                    Meducate is live in production at meducateapi.com. It covers 2,000+ health topics from
+                                    MedlinePlus and PubMed, each with structured summaries, symptoms, causes, treatments, and
+                                    citations, classified under ICD-10 categories and refreshed daily. The free tier is
+                                    1,000 requests/day with no credit card required; a demo key is at{" "}
+                                    <a href="https://meducateapi.com/docs" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
+                                        meducateapi.com/docs
+                                    </a>. Getting set up takes minutes: request a magic link, create an organisation, generate a key.
                                 </p>
                             </div>
                         </div>
                     )}
                 </div>
 
-                <div className="bg-card border border-border rounded-lg p-6 shadow-lg hover:shadow-xl transition">
-                    <h3 className="text-xl font-bold mb-2">Medeck</h3>
-                    <p className="text-muted-foreground mb-4">
-                        A medical flashcard app using spaced repetition (SM-2) to help medical students study. Pulls real topics from the Meducate API and generates structured flashcards automatically.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">.NET 10</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Blazor WASM</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">SQLite</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Meducate API</span>
-                    </div>
-                    <span className="inline-block text-sm text-muted-foreground italic">Early development — not yet live</span>
-                </div>
 
             </section>
 

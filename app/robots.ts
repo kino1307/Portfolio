@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: "*",
             allow: "/",
+            disallow: "/_next/static/media/",
         },
         sitemap: "https://wjleece.dev/sitemap.xml",
     };

@@ -76,71 +76,88 @@ export default function MeducateApiPage() {
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground mb-4">The Problem</h2>
                         <p>
-                            Medical reference data from sources like MedlinePlus (U.S. National Library of Medicine,
-                            2,000+ health topics) and PubMed is unstructured and inconsistent — each source uses
-                            different formats, update cycles, and access methods. A single condition like Type 2
-                            Diabetes might appear across multiple providers with conflicting field names, missing
-                            symptoms, or outdated treatment info. Developers building health education tools end up
-                            writing brittle scrapers and hand-rolled parsers that break every time an upstream source
-                            changes, duplicating effort that could be solved once at the infrastructure level.
+                            Medical reference data is a mess to work with. MedlinePlus (the National Library of
+                            Medicine&apos;s consumer health site, 2,000+ topics) and PubMed each use their own
+                            formats, their own update schedules, and their own access methods. Look up something as
+                            common as Type 2 Diabetes and you will find conflicting field names, missing symptoms, or
+                            treatment info that is years out of date, depending on which provider you asked. Every
+                            developer building a health education tool ends up writing the same brittle scraper and
+                            hand-rolled parser, and it breaks the moment an upstream source changes anything. I wanted
+                            to solve that once, at the infrastructure level, instead of rebuilding it for every
+                            project.
                         </p>
                     </section>
 
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground mb-4">Architecture &amp; Tech Decisions</h2>
                         <p className="mb-4">
-                            Meducate follows Clean Architecture across four layers — Domain, Application,
-                            Infrastructure, and Presentation — so the data providers, LLM processor, and persistence
-                            layer can each be replaced independently. It ships as a .NET 10 monolith deployed on
-                            Railway, keeping operational complexity low while the product is in its early stage.
+                            Meducate is built with Clean Architecture across four layers: Domain, Application,
+                            Infrastructure, and Presentation. That separation means I can swap out a data provider,
+                            the LLM processor, or the persistence layer without the others caring. It runs as a
+                            single .NET 10 monolith on Railway. At this stage, a monolith is just less for me to
+                            operate than a set of services I would have to babysit.
                         </p>
-                        <ul className="list-disc list-inside space-y-4">
-                            <li>
-                                <strong className="text-foreground">LLM ingestion pipeline</strong> — Hangfire runs
-                                two daily jobs: a <em>TopicDiscoveryJob</em> at 2 AM UTC fetches new topics from
-                                MedlinePlus and PubMed, then an LLM classification step (Semantic Kernel + OpenAI GPT-4)
-                                assigns each topic an ICD-10 category (one of 24 standardised medical categories) and
-                                a type (Disease, Drug, Procedure, Symptom, etc.). A second extraction pass pulls out
-                                structured fields — summary, symptoms, causes, treatments, and citations — before a
-                                quality-control stage handles synonym merging and field validation. Existing topics are
-                                re-processed at 3 AM UTC so the data stays current. Semantic Kernel was chosen over direct
-                                SDK calls because it provides prompt orchestration and makes it easy to swap models or
-                                add prompt filters without touching business logic.
-                            </li>
-                            <li>
-                                <strong className="text-foreground">Blazor Server dashboard</strong> — The developer
-                                portal uses passwordless magic-link authentication (emails sent via Resend API) with
-                                cookie-based sessions. Users create an organisation, generate up to 5 API keys, and
-                                monitor usage through a real-time dashboard. Keeping the front-end in Blazor means the
-                                entire stack is C# with shared models between the API and UI.
-                            </li>
-                            <li>
-                                <strong className="text-foreground">PostgreSQL + EF Core</strong> — All normalised
-                                medical data, user accounts, organisations, and usage metrics live in PostgreSQL 16
-                                via Entity Framework Core (Npgsql). Hangfire also uses PostgreSQL-backed persistence,
-                                meaning background jobs survive restarts and failures can be retried from the built-in
-                                dashboard.
-                            </li>
-                            <li>
-                                <strong className="text-foreground">Minimal API surface</strong> — The public API
-                                exposes topic endpoints (<code>/api/topics</code>, <code>/api/topics/search</code>, <code>/api/topics/{"{name}"}</code>)
-                                with API-key auth via <code>X-Api-Key</code> header and two-tier rate limiting: 60 requests/min
-                                per key plus a configurable daily cap with 80% usage alerts. Response schemas adapt to
-                                topic type — a Disease returns symptoms, causes, and treatments, while a Symptom returns
-                                related symptoms, associated conditions, and management. Topics that are removed by all
-                                upstream providers are automatically removed from the API.
-                            </li>
-                        </ul>
+                        <div className="space-y-6">
+                            <div>
+                                <h3 className="text-foreground font-semibold mb-1">LLM ingestion pipeline</h3>
+                                <p>
+                                    Two Hangfire jobs handle ingestion. A <em>TopicDiscoveryJob</em> runs at 2 AM UTC
+                                    and pulls new topics from MedlinePlus and PubMed. From there, an LLM
+                                    classification step (Semantic Kernel on top of OpenAI GPT-4) assigns each topic
+                                    one of 24 ICD-10 categories and a type: disease, drug, procedure, symptom, and so
+                                    on. A second pass extracts the structured fields, summary, symptoms, causes,
+                                    treatments, citations, and a quality-control step merges synonyms and validates
+                                    everything before it is saved. Existing topics get reprocessed at 3 AM UTC so
+                                    nothing goes stale. I went with Semantic Kernel instead of calling the OpenAI SDK
+                                    directly mainly so I could swap models or add prompt filters later without
+                                    rewriting the business logic around them.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="text-foreground font-semibold mb-1">Blazor Server dashboard</h3>
+                                <p>
+                                    The developer portal is Blazor Server with passwordless magic-link
+                                    authentication (emails go out through the Resend API) and cookie-based sessions.
+                                    From there you create an organisation, generate up to five API keys, and watch
+                                    usage on a live dashboard. Keeping the front end in Blazor rather than reaching
+                                    for React or something similar meant the whole stack stayed C#, with models
+                                    shared between the API and the UI instead of duplicated in TypeScript.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="text-foreground font-semibold mb-1">PostgreSQL + EF Core</h3>
+                                <p>
+                                    The normalised medical data, user accounts, organisations, and usage metrics all
+                                    live in PostgreSQL 16 through Entity Framework Core and Npgsql. Hangfire also
+                                    persists to PostgreSQL, so a restart does not lose a job mid-run, and anything
+                                    that fails can be retried straight from Hangfire&apos;s own dashboard.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="text-foreground font-semibold mb-1">Minimal API surface</h3>
+                                <p>
+                                    The public API is intentionally small: <code>/api/topics</code>,{" "}
+                                    <code>/api/topics/search</code>, and <code>/api/topics/{"{name}"}</code>, all
+                                    behind an API key passed as an <code>X-Api-Key</code> header. Rate limiting is
+                                    two-tier, 60 requests a minute per key plus a configurable daily cap, with an
+                                    alert at 80% usage. What comes back depends on the topic type: a disease returns
+                                    symptoms, causes, and treatments, while a symptom returns related symptoms and
+                                    associated conditions instead. If a topic disappears from every upstream source,
+                                    it gets pulled from the API automatically rather than sitting around stale.
+                                </p>
+                            </div>
+                        </div>
                     </section>
 
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground mb-4">Outcome</h2>
                         <p>
-                            Meducate currently ingests and classifies 2,000+ health topics from MedlinePlus and PubMed,
-                            each with structured summaries, symptoms, causes, treatments, and citations — all classified
-                            under ICD-10 categories and refreshed daily without manual intervention. The developer portal
-                            provides self-service onboarding: request a magic link, create an organisation, generate an API
-                            key, and start querying structured medical data in minutes.
+                            Right now Meducate is ingesting and classifying over 2,000 health topics from
+                            MedlinePlus and PubMed, each with a structured summary, symptoms, causes, treatments, and
+                            citations, sorted under ICD-10 categories and refreshed every day without me touching
+                            anything. Getting access is meant to be quick: request a magic link, create an
+                            organisation, generate a key, and you are querying structured medical data within a few
+                            minutes.
                         </p>
                     </section>
                 </div>

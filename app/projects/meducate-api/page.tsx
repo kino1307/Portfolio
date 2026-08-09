@@ -76,15 +76,19 @@ export default function MeducateApiPage() {
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground mb-4">The Problem</h2>
                         <p>
-                            Medical reference data is a mess to work with. MedlinePlus (the National Library of
-                            Medicine&apos;s consumer health site, 2,000+ topics) and PubMed each use their own
-                            formats, their own update schedules, and their own access methods. Look up something as
-                            common as Type 2 Diabetes and you will find conflicting field names, missing symptoms, or
-                            treatment info that is years out of date, depending on which provider you asked. Every
-                            developer building a health education tool ends up writing the same brittle scraper and
-                            hand-rolled parser, and it breaks the moment an upstream source changes anything. I wanted
-                            to solve that once, at the infrastructure level, instead of rebuilding it for every
-                            project.
+                            This started as an idea about how to use AI without opening myself up to hallucination
+                            risk. That eventually evolved into a generic structured data pipeline, one that
+                            didn&apos;t have to be about medical data specifically, medical was just the domain I
+                            picked for the challenge (and partly because there&apos;s so much unstructured data
+                            floating around in it). MedlinePlus (the National Library of Medicine&apos;s consumer
+                            health site, 2,000+ topics) and PubMed are a good example of the problem: each one uses
+                            its own formats, its own update schedule, and its own access method. Look up something
+                            as common as Type 2 Diabetes and you&apos;ll find conflicting field names, missing
+                            symptoms, or treatment info that&apos;s years out of date, depending on which provider
+                            you asked. Every developer building a health education tool ends up writing the same
+                            brittle scraper and hand-rolled parser, and it breaks the moment an upstream source
+                            changes anything. I wanted to solve that once, at the infrastructure level, rather than
+                            rebuild it for every project I picked up.
                         </p>
                     </section>
 
@@ -93,9 +97,13 @@ export default function MeducateApiPage() {
                         <p className="mb-4">
                             Meducate is built with Clean Architecture across four layers: Domain, Application,
                             Infrastructure, and Presentation. That separation means I can swap out a data provider,
-                            the LLM processor, or the persistence layer without the others caring. It runs as a
-                            single .NET 10 monolith on Railway. At this stage, a monolith is just less for me to
-                            operate than a set of services I would have to babysit.
+                            the LLM processor, or the persistence layer without the others caring. Ironically,
+                            it&apos;s the one part of this project I&apos;d probably do differently now. Since
+                            building this I&apos;ve moved onto a hybridised vertical-slice architecture at my
+                            full-time job, and it&apos;s a drastic improvement when you&apos;re working alongside an
+                            AI coding partner. Clean Architecture wasn&apos;t the wrong call at the time, it&apos;s
+                            just not what I&apos;d reach for today. It still runs as a single .NET 10 monolith on
+                            Railway, which keeps things simple while the product is early.
                         </p>
                         <div className="space-y-6">
                             <div>
@@ -106,11 +114,16 @@ export default function MeducateApiPage() {
                                     classification step (Semantic Kernel on top of OpenAI GPT-4) assigns each topic
                                     one of 24 ICD-10 categories and a type: disease, drug, procedure, symptom, and so
                                     on. A second pass extracts the structured fields, summary, symptoms, causes,
-                                    treatments, citations, and a quality-control step merges synonyms and validates
-                                    everything before it is saved. Existing topics get reprocessed at 3 AM UTC so
-                                    nothing goes stale. I went with Semantic Kernel instead of calling the OpenAI SDK
-                                    directly mainly so I could swap models or add prompt filters later without
-                                    rewriting the business logic around them.
+                                    treatments, citations, then a quality-control step screens for hallucinations,
+                                    merges synonyms, and validates everything before it is saved. Existing topics
+                                    get reprocessed at 3 AM UTC so nothing goes stale. Strip away the detail and
+                                    it&apos;s really just four steps: ingest, format, screen for hallucinations,
+                                    serve. That&apos;s the part of this project I&apos;m most proud of, it&apos;s a
+                                    generic enough pattern that it isn&apos;t really tied to medical data at all, it
+                                    would work for pretty much any domain with a lot of messy source material. I
+                                    went with Semantic Kernel mainly because it, and Blazor, sit inside the .NET
+                                    ecosystem I already use day to day at my full-time job, rather than juggling a
+                                    second stack purely for this project.
                                 </p>
                             </div>
                             <div>
@@ -119,9 +132,9 @@ export default function MeducateApiPage() {
                                     The developer portal is Blazor Server with passwordless magic-link
                                     authentication (emails go out through the Resend API) and cookie-based sessions.
                                     From there you create an organisation, generate up to five API keys, and watch
-                                    usage on a live dashboard. Keeping the front end in Blazor rather than reaching
-                                    for React or something similar meant the whole stack stayed C#, with models
-                                    shared between the API and the UI instead of duplicated in TypeScript.
+                                    usage on a live dashboard. Keeping the front end in Blazor kept the whole stack
+                                    in C#, with models shared between the API and the UI instead of duplicated in
+                                    TypeScript.
                                 </p>
                             </div>
                             <div>
@@ -152,12 +165,17 @@ export default function MeducateApiPage() {
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground mb-4">Outcome</h2>
                         <p>
-                            Right now Meducate is ingesting and classifying over 2,000 health topics from
-                            MedlinePlus and PubMed, each with a structured summary, symptoms, causes, treatments, and
-                            citations, sorted under ICD-10 categories and refreshed every day without me touching
-                            anything. Getting access is meant to be quick: request a magic link, create an
-                            organisation, generate a key, and you are querying structured medical data within a few
-                            minutes.
+                            At its core, Meducate is a hub that lets developers fetch auto-updated medical data for
+                            free, pulled from multiple trusted sources and formatted into a predictable structure
+                            you can query programmatically. Right now it&apos;s ingesting and classifying over 2,000
+                            health topics from MedlinePlus and PubMed, each with a structured summary, symptoms,
+                            causes, treatments, and citations, sorted under ICD-10 categories and refreshed every
+                            day without me touching anything. Getting access is meant to be quick: request a magic
+                            link, create an organisation, generate a key, and you&apos;re querying structured
+                            medical data within a few minutes. The core pipeline is done, it&apos;s really the
+                            formatting and accessibility layer that&apos;s finished. What&apos;s next is webhooks,
+                            more data sources, and generally better accessibility options for developers pulling
+                            from it.
                         </p>
                     </section>
                 </div>

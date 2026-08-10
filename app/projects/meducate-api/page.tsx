@@ -3,13 +3,13 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Meducate API — Medical Data REST API Case Study | Will Leece",
-    description: "A REST API delivering structured, ICD-10 classified medical data from MedlinePlus and PubMed. Built with .NET 10, Blazor Server, PostgreSQL, and Semantic Kernel.",
+    description: "A REST API delivering structured medical data from MedlinePlus and PubMed, categorised and WHO ICD-11 coded. Built with .NET 10, Blazor Server, PostgreSQL, and Semantic Kernel.",
     alternates: {
         canonical: "https://wjleece.dev/projects/meducate-api",
     },
     openGraph: {
         title: "Meducate API — Medical Data REST API Case Study | Will Leece",
-        description: "A REST API delivering structured, ICD-10 classified medical data from MedlinePlus and PubMed. Built with .NET 10, Blazor Server, PostgreSQL, and Semantic Kernel.",
+        description: "A REST API delivering structured medical data from MedlinePlus and PubMed, categorised and WHO ICD-11 coded. Built with .NET 10, Blazor Server, PostgreSQL, and Semantic Kernel.",
         url: "https://wjleece.dev/projects/meducate-api",
         type: "article",
     },
@@ -19,7 +19,7 @@ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",
     "name": "Meducate API",
-    "description": "A REST API delivering structured, ICD-10 classified medical data ingested from MedlinePlus and PubMed, classified by LLM, and served through a clean versioned interface refreshed daily.",
+    "description": "A REST API delivering structured medical data ingested from MedlinePlus and PubMed, classified by LLM and WHO ICD-11 coded, served through a clean versioned interface refreshed daily.",
     "programmingLanguage": ["C#", ".NET 10"],
     "runtimePlatform": "Railway",
     "author": {
@@ -112,7 +112,7 @@ export default function MeducateApiPage() {
                                     Two Hangfire jobs handle ingestion. A <em>TopicDiscoveryJob</em> runs at 2 AM UTC
                                     and pulls new topics from MedlinePlus and PubMed. From there, an LLM
                                     classification step (Semantic Kernel on top of OpenAI GPT-4) assigns each topic
-                                    one of 24 ICD-10 categories and a type: disease, drug, procedure, symptom, and so
+                                    one of 24 standardised medical categories and a type: disease, drug, procedure, symptom, and so
                                     on. A second pass extracts the structured fields, summary, symptoms, causes,
                                     treatments, citations, then a quality-control step screens for hallucinations,
                                     merges synonyms, and validates everything before it is saved. Existing topics
@@ -182,7 +182,7 @@ export default function MeducateApiPage() {
                             free, pulled from multiple trusted sources and formatted into a predictable structure
                             you can query programmatically. Right now it&apos;s ingesting and classifying over 2,000
                             health topics from MedlinePlus and PubMed, each with a structured summary, symptoms,
-                            causes, treatments, and citations, sorted under ICD-10 categories and refreshed every
+                            causes, treatments, and citations, sorted into 24 standardised medical categories and refreshed every
                             day without me touching anything. Roughly 88% of diagnosable topics also carry a
                             verified WHO ICD-11 code. Getting access is meant to be quick: request a magic
                             link, create an organisation, generate a key, and you&apos;re querying structured

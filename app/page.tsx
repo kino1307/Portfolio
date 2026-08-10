@@ -184,7 +184,7 @@ export default function Home() {
                         <h3 className="text-xl font-bold mb-2">Meducate API</h3>
                     </a>
                     <p className="text-muted-foreground mb-4">
-                        A REST API that ingests medical data from MedlinePlus and PubMed, uses an LLM to classify and structure it under ICD-10 categories, and serves it through a versioned interface refreshed daily. Nightly quality-control jobs check that AI-generated summaries haven&apos;t drifted from their source material and flag any that have for re-processing. Diagnosable topics are also cross-referenced against the WHO ICD-11 API and tagged with a real diagnostic code where a confident match exists.
+                        A REST API that ingests medical data from MedlinePlus and PubMed, uses an LLM to classify and structure it into standardised medical categories, and serves it through a versioned interface refreshed daily. Nightly quality-control jobs check that AI-generated summaries haven&apos;t drifted from their source material and flag any that have for re-processing. Diagnosable topics are also cross-referenced against the WHO ICD-11 API and tagged with a real diagnostic code where a confident match exists.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">.NET 10</span>
@@ -250,7 +250,7 @@ export default function Home() {
                                         <strong className="text-foreground">LLM ingestion pipeline</strong>: Hangfire runs
                                         two daily jobs. A <em>TopicDiscoveryJob</em> at 2 AM UTC fetches new topics from
                                         MedlinePlus and PubMed, then an LLM classification step (Semantic Kernel + OpenAI GPT-4)
-                                        assigns each topic an ICD-10 category (one of 24 standardised medical categories) and
+                                        assigns each topic one of 24 standardised medical categories and
                                         a type (Disease, Drug, Procedure, Symptom, etc.). A second extraction pass pulls out
                                         structured fields: summary, symptoms, causes, treatments, and citations. Existing topics
                                         are re-processed at 3 AM UTC so the data stays current. Semantic Kernel was chosen over
@@ -305,7 +305,7 @@ export default function Home() {
                                 <p>
                                     Meducate is live in production at meducateapi.com. It covers 2,000+ health topics from
                                     MedlinePlus and PubMed, each with structured summaries, symptoms, causes, treatments, and
-                                    citations, classified under ICD-10 categories and refreshed daily, with roughly 88% of
+                                    citations, sorted into 24 standardised medical categories and refreshed daily, with roughly 88% of
                                     diagnosable topics also carrying a verified WHO ICD-11 code. The free tier is
                                     1,000 requests/day with no credit card required; a demo key is at{" "}
                                     <a href="https://meducateapi.com/docs" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">

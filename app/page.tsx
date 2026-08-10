@@ -184,7 +184,7 @@ export default function Home() {
                         <h3 className="text-xl font-bold mb-2">Meducate API</h3>
                     </a>
                     <p className="text-muted-foreground mb-4">
-                        A REST API that ingests medical data from MedlinePlus and PubMed, uses an LLM to classify and structure it under ICD-10 categories, and serves it through a versioned interface refreshed daily. Nightly quality-control jobs check that AI-generated summaries haven&apos;t drifted from their source material and flag any that have for re-processing.
+                        A REST API that ingests medical data from MedlinePlus and PubMed, uses an LLM to classify and structure it under ICD-10 categories, and serves it through a versioned interface refreshed daily. Nightly quality-control jobs check that AI-generated summaries haven&apos;t drifted from their source material and flag any that have for re-processing. Diagnosable topics are also cross-referenced against the WHO ICD-11 API and tagged with a real diagnostic code where a confident match exists.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">.NET 10</span>
@@ -193,6 +193,7 @@ export default function Home() {
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Semantic Kernel</span>
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Hangfire</span>
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Railway</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">WHO ICD-11 API</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
                         <a href="https://meducateapi.com/docs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
@@ -265,6 +266,16 @@ export default function Home() {
                                         can&apos;t silently corrupt the API&apos;s data. Regressions surface before they reach consumers.
                                     </li>
                                     <li>
+                                        <strong className="text-foreground">WHO ICD-11 coding</strong>: diagnosable
+                                        topics (diseases, disorders, syndromes, symptoms, and mental health conditions)
+                                        are matched against the official WHO ICD-11 API and tagged with a real
+                                        diagnostic code and title. The search only accepts the first codeable entity
+                                        in the pre-sorted result set, deliberately conservative since a wrong code is
+                                        worse than a missing one. Around 88% of eligible topics match automatically;
+                                        the rest are names too colloquial or broad for WHO&apos;s exact-match search
+                                        and are retried on every refresh cycle.
+                                    </li>
+                                    <li>
                                         <strong className="text-foreground">Blazor Server dashboard</strong>: the developer
                                         portal uses passwordless magic-link authentication (emails sent via Resend API) with
                                         cookie-based sessions. Users can create an organisation, generate up to five API keys,
@@ -294,7 +305,8 @@ export default function Home() {
                                 <p>
                                     Meducate is live in production at meducateapi.com. It covers 2,000+ health topics from
                                     MedlinePlus and PubMed, each with structured summaries, symptoms, causes, treatments, and
-                                    citations, classified under ICD-10 categories and refreshed daily. The free tier is
+                                    citations, classified under ICD-10 categories and refreshed daily, with roughly 88% of
+                                    diagnosable topics also carrying a verified WHO ICD-11 code. The free tier is
                                     1,000 requests/day with no credit card required; a demo key is at{" "}
                                     <a href="https://meducateapi.com/docs" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
                                         meducateapi.com/docs

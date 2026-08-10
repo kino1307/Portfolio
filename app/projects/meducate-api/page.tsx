@@ -62,7 +62,7 @@ export default function MeducateApiPage() {
                 </a>
 
                 <div className="flex flex-wrap gap-2 mt-6 mb-12">
-                    {[".NET 10", "Blazor Server", "PostgreSQL", "Semantic Kernel", "Hangfire", "Railway"].map((tag) => (
+                    {[".NET 10", "Blazor Server", "PostgreSQL", "Semantic Kernel", "Hangfire", "Railway", "WHO ICD-11 API"].map((tag) => (
                         <span
                             key={tag}
                             className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium"
@@ -127,6 +127,19 @@ export default function MeducateApiPage() {
                                 </p>
                             </div>
                             <div>
+                                <h3 className="text-foreground font-semibold mb-1">WHO ICD-11 coding</h3>
+                                <p>
+                                    Diagnosable topics, diseases, disorders, syndromes, symptoms, mental health
+                                    conditions, get matched against the official WHO ICD-11 API and tagged with a
+                                    real diagnostic code and title. A Hangfire step authenticates against WHO&apos;s
+                                    OAuth token endpoint, searches the ICD-11 MMS release, and only accepts the
+                                    first codeable entity in the pre-sorted result set, deliberately conservative,
+                                    since a wrong code is worse than no code at all. About 88% of eligible topics
+                                    match automatically; the rest are names too colloquial or broad for WHO&apos;s
+                                    exact-match search, and get retried on every refresh cycle rather than forced.
+                                </p>
+                            </div>
+                            <div>
                                 <h3 className="text-foreground font-semibold mb-1">Blazor Server dashboard</h3>
                                 <p>
                                     The developer portal is Blazor Server with passwordless magic-link
@@ -170,7 +183,8 @@ export default function MeducateApiPage() {
                             you can query programmatically. Right now it&apos;s ingesting and classifying over 2,000
                             health topics from MedlinePlus and PubMed, each with a structured summary, symptoms,
                             causes, treatments, and citations, sorted under ICD-10 categories and refreshed every
-                            day without me touching anything. Getting access is meant to be quick: request a magic
+                            day without me touching anything. Roughly 88% of diagnosable topics also carry a
+                            verified WHO ICD-11 code. Getting access is meant to be quick: request a magic
                             link, create an organisation, generate a key, and you&apos;re querying structured
                             medical data within a few minutes. The core pipeline is done, it&apos;s really the
                             formatting and accessibility layer that&apos;s finished. What&apos;s next is webhooks,

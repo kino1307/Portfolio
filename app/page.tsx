@@ -74,10 +74,14 @@ export default function Home() {
             <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-card border border-border rounded-full px-6 py-2 flex items-center space-x-6 shadow-lg" aria-label="Main navigation">
                 <button
                     onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    className="flex-shrink-0 font-bold text-lg cursor-pointer hover:scale-110 transition-transform"
+                    className="flex-shrink-0 cursor-pointer hover:scale-110 transition-transform"
                     aria-label="Scroll to top"
                 >
-                    🌀
+                    <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+                        <rect x="8" y="9" width="16" height="4" rx="2" />
+                        <rect x="9" y="15" width="16" height="4" rx="2" opacity="0.75" />
+                        <rect x="10" y="21" width="16" height="4" rx="2" opacity="0.5" />
+                    </svg>
                 </button>
 
                 <nav className="flex space-x-4">

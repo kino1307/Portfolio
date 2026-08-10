@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Will Leece — Full-Stack Developer | ASP.NET Core & C# | UK";
+export const alt = "Wayfarer — Wikidata-Grounded Map Query Tool Case Study | Will Leece";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,7 +35,7 @@ export default function Image() {
                         fontWeight: 600,
                     }}
                 >
-                    wjleece.dev
+                    Case Study
                 </div>
                 <div
                     style={{
@@ -46,7 +46,7 @@ export default function Image() {
                         marginBottom: "24px",
                     }}
                 >
-                    Will Leece
+                    Wayfarer
                 </div>
                 <div
                     style={{
@@ -56,10 +56,10 @@ export default function Image() {
                         fontWeight: 400,
                     }}
                 >
-                    Full-Stack .NET Developer · UK
+                    Natural-language map queries, grounded in Wikidata via a live schema-discovery agent
                 </div>
                 <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-                    {["ASP.NET Core", "C#", "Blazor", "SignalR", "Semantic Kernel"].map((skill) => (
+                    {["React", "TypeScript", "Wikidata SPARQL", "Claude & GPT-5.6"].map((skill) => (
                         <div
                             key={skill}
                             style={{

@@ -1,5 +1,5 @@
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import React from "react";
 import { Analytics } from '@vercel/analytics/next';
@@ -48,6 +48,10 @@ export const metadata: Metadata = {
             follow: true,
         }
     }
+};
+
+export const viewport: Viewport = {
+    themeColor: "#000000",
 };
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {

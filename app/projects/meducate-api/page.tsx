@@ -30,12 +30,25 @@ const jsonLd = {
     "url": "https://meducateapi.com",
 };
 
+const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Will Leece", "item": "https://wjleece.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Meducate API", "item": "https://wjleece.dev/projects/meducate-api" },
+    ],
+};
+
 export default function MeducateApiPage() {
     return (
         <main className="min-h-[100dvh] bg-background text-foreground">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
 
             <div className="max-w-4xl mx-auto px-6 py-24">

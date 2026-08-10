@@ -30,12 +30,25 @@ const jsonLd = {
     "url": "https://wayfarer.wjleece.dev",
 };
 
+const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Will Leece", "item": "https://wjleece.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Wayfarer", "item": "https://wjleece.dev/projects/wayfarer" },
+    ],
+};
+
 export default function WayfarerPage() {
     return (
         <main className="min-h-[100dvh] bg-background text-foreground">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
 
             <div className="max-w-4xl mx-auto px-6 py-24">

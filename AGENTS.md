@@ -53,6 +53,14 @@ Everything visible to a visitor lives in `app/page.tsx`. If a task touches conte
 - Case study covers: Problem → Architecture & Tech Decisions (5 bullets) → Outcome
 - Card CTA: "Try with demo key →" → meducateapi.com/docs
 
+### Wayfarer
+- Live at wayfarer.wjleece.dev, GitHub: github.com/kino1307/wayfarer
+- Natural-language query → map, grounded in Wikidata (not guessed by an LLM)
+- Key technical differentiator: an agent reads Wikidata's schema live and builds/tests SPARQL at query time (no fixed template library), gated by an independent verification pass before anything reaches the map
+- BYOK: no server-side LLM key, users bring their own Anthropic or OpenAI key
+- Case study covers: Problem → Architecture & Tech Decisions (6 bullets) → Outcome
+- Card CTA: "Try it live →" → wayfarer.wjleece.dev
+
 ## Tone / content rules
 
 - No marketing language ("powerful", "cutting-edge", "innovative")

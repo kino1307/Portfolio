@@ -11,6 +11,7 @@ import { FaLinkedin } from "react-icons/fa";
 export default function Home() {
     const [darkMode, setDarkMode] = useState(true);
     const [meducateExpanded, setMeducateExpanded] = useState(false);
+    const [wayfarerExpanded, setWayfarerExpanded] = useState(false);
 
     useEffect(() => {
         const saved = localStorage.getItem("darkMode");
@@ -317,6 +318,124 @@ export default function Home() {
                     )}
                 </div>
 
+                <div className="bg-card border border-border rounded-lg p-6 shadow-lg hover:shadow-xl transition">
+                    <a href="https://wayfarer.wjleece.dev" target="_blank" rel="noopener noreferrer">
+                        <h3 className="text-xl font-bold mb-2">Wayfarer</h3>
+                    </a>
+                    <p className="text-muted-foreground mb-4">
+                        A natural-language query tool that plots results on a map, grounded in Wikidata rather than guessed by an LLM. An agent explores Wikidata&apos;s schema live, builds and tests a SPARQL query, then a verification gate checks the result against expected type, row count, and a second independent pass before anything reaches the map &mdash; results that can&apos;t be confirmed are visibly flagged, never silently blended in with verified ones.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">React</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">TypeScript</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Vite</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Node.js / Express</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Wikidata SPARQL</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Leaflet</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Claude &amp; GPT-5.6</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Docker</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
+                        <a href="https://wayfarer.wjleece.dev" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
+                            Try it live →
+                        </a>
+                        <a href="https://github.com/kino1307/wayfarer" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-1">
+                            <SiGithub className="w-3.5 h-3.5" /> GitHub
+                        </a>
+                        <span className="text-sm text-muted-foreground">BYOK &middot; bring your own Anthropic or OpenAI key, nothing stored server-side</span>
+                    </div>
+
+                    <div className="flex items-center gap-4 mt-4">
+                        <button
+                            onClick={() => setWayfarerExpanded(!wayfarerExpanded)}
+                            className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition cursor-pointer"
+                        >
+                            {wayfarerExpanded ? "Hide" : "Read"} case study
+                            {wayfarerExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                        </button>
+                        <Link
+                            href="/projects/wayfarer"
+                            className="text-sm font-medium text-muted-foreground hover:text-foreground transition underline"
+                        >
+                            Full case study page →
+                        </Link>
+                    </div>
+
+                    {wayfarerExpanded && (
+                        <div className="mt-6 space-y-6 text-muted-foreground border-t border-border pt-6">
+                            <div>
+                                <h4 className="text-lg font-semibold text-foreground mb-2">The Problem</h4>
+                                <p>
+                                    I wanted a way to turn a plain-English question &mdash; &quot;South American
+                                    capitals&quot;, &quot;Beatles birthplaces&quot; &mdash; into a map, without either
+                                    hand-writing SPARQL for every query shape or trusting an LLM&apos;s raw output,
+                                    which sounds just as confident whether or not it&apos;s actually right. Most
+                                    &quot;ask an LLM to find some places&quot; demos skip the second half of that
+                                    problem entirely: they show you a pin and never tell you whether it&apos;s real.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 className="text-lg font-semibold text-foreground mb-2">Architecture &amp; Tech Decisions</h4>
+                                <ul className="list-disc list-inside space-y-2">
+                                    <li>
+                                        <strong className="text-foreground">Schema-discovery agent</strong>: instead of
+                                        a fixed library of query templates, the agent reads Wikidata&apos;s own schema
+                                        at query time &mdash; it searches for the relevant properties and classes,
+                                        probes how real instances are modelled, and builds and tests a SPARQL query
+                                        live against Wikidata before it&apos;s ever proposed as an answer. The same
+                                        code path handles &quot;South American capitals&quot; and &quot;WWI Western
+                                        Front battlefields&quot; with no query-type branch.
+                                    </li>
+                                    <li>
+                                        <strong className="text-foreground">Verification gate</strong>: before a
+                                        result reaches the map it&apos;s checked along independent axes &mdash; does
+                                        each row match the expected type, does the row count look sane, does a second
+                                        independent check on a sample hold up. A failed check triggers one bounded
+                                        repair pass; if it still can&apos;t be trusted, the result is downgraded and
+                                        visibly flagged, never silently dropped.
+                                    </li>
+                                    <li>
+                                        <strong className="text-foreground">Two-axis trust model</strong>: every pin
+                                        carries a coordinate trust tier (verified from Wikidata&apos;s own data →
+                                        geocoded → approximate) and a membership trust tier (confirmed by a real
+                                        Wikidata relationship vs. the model&apos;s own unverified claim). A pin only
+                                        reads as fully clean when both are the strongest tier.
+                                    </li>
+                                    <li>
+                                        <strong className="text-foreground">Multi-provider BYOK</strong>: no
+                                        server-side LLM key. Users bring their own Anthropic or OpenAI key, entered in
+                                        the browser and sent per request, never logged or stored server-side. A shared
+                                        provider dispatcher in the API layer meant adding OpenAI alongside the
+                                        original Claude integration was a same-day change, not a rewrite.
+                                    </li>
+                                    <li>
+                                        <strong className="text-foreground">Cost control</strong>: a cross-user result
+                                        cache (24h TTL, keyed on query and model) serves repeat queries for free,
+                                        since the underlying Wikidata data barely changes day to day.
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 className="text-lg font-semibold text-foreground mb-2">Outcome</h4>
+                                <p>
+                                    Live at{" "}
+                                    <a href="https://wayfarer.wjleece.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
+                                        wayfarer.wjleece.dev
+                                    </a>. The canonical test case &mdash; &quot;South American capitals&quot; &mdash;
+                                    returns every capital, none spurious, each with a verified coordinate and a
+                                    working source link. Harder multi-entity queries, like every member of a band&apos;s
+                                    birthplace, run through the identical pipeline with no special-casing. When
+                                    Wikidata has no structured answer for a subjective or very recent query, the app
+                                    falls back to the model&apos;s own knowledge rather than returning nothing &mdash;
+                                    but every one of those results is visibly labelled as unverified, not blended in
+                                    with the grounded ones.
+                                </p>
+                            </div>
+                        </div>
+                    )}
+                </div>
 
             </section>
 

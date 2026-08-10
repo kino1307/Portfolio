@@ -323,7 +323,7 @@ export default function Home() {
                         <h3 className="text-xl font-bold mb-2">Wayfarer</h3>
                     </a>
                     <p className="text-muted-foreground mb-4">
-                        A natural-language query tool that plots results on a map, grounded in Wikidata rather than guessed by an LLM. An agent explores Wikidata&apos;s schema live, builds and tests a SPARQL query, then a verification gate checks the result against expected type, row count, and a second independent pass before anything reaches the map &mdash; results that can&apos;t be confirmed are visibly flagged, never silently blended in with verified ones.
+                        A natural-language query tool that plots results on a map, grounded in Wikidata rather than guessed by an LLM. An agent explores Wikidata&apos;s schema live and builds and tests a SPARQL query, then a verification gate checks the result against expected type, row count, and a second independent pass before anything reaches the map. Anything that can&apos;t be confirmed gets flagged in the UI instead of being blended in with the verified results.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">React</span>
@@ -366,12 +366,13 @@ export default function Home() {
                             <div>
                                 <h4 className="text-lg font-semibold text-foreground mb-2">The Problem</h4>
                                 <p>
-                                    I wanted a way to turn a plain-English question &mdash; &quot;South American
-                                    capitals&quot;, &quot;Beatles birthplaces&quot; &mdash; into a map, without either
-                                    hand-writing SPARQL for every query shape or trusting an LLM&apos;s raw output,
-                                    which sounds just as confident whether or not it&apos;s actually right. Most
-                                    &quot;ask an LLM to find some places&quot; demos skip the second half of that
-                                    problem entirely: they show you a pin and never tell you whether it&apos;s real.
+                                    I wanted a way to turn a plain-English question, something like &quot;South
+                                    American capitals&quot; or &quot;Beatles birthplaces&quot;, into a map. The two
+                                    obvious approaches both fall short: hand-writing SPARQL for every query shape
+                                    doesn&apos;t scale, and trusting an LLM&apos;s raw output means it sounds just
+                                    as confident whether or not it&apos;s actually right. Most &quot;ask an LLM to
+                                    find some places&quot; demos skip that second half of the problem. They show you
+                                    a pin and never tell you whether it&apos;s real.
                                 </p>
                             </div>
 
@@ -379,21 +380,21 @@ export default function Home() {
                                 <h4 className="text-lg font-semibold text-foreground mb-2">Architecture &amp; Tech Decisions</h4>
                                 <ul className="list-disc list-inside space-y-2">
                                     <li>
-                                        <strong className="text-foreground">Schema-discovery agent</strong>: instead of
-                                        a fixed library of query templates, the agent reads Wikidata&apos;s own schema
-                                        at query time &mdash; it searches for the relevant properties and classes,
-                                        probes how real instances are modelled, and builds and tests a SPARQL query
+                                        <strong className="text-foreground">Schema-discovery agent</strong>: instead
+                                        of a fixed library of query templates, the agent reads Wikidata&apos;s own
+                                        schema at query time. It searches for the relevant properties and classes,
+                                        probes how real instances are modelled, then builds and tests a SPARQL query
                                         live against Wikidata before it&apos;s ever proposed as an answer. The same
                                         code path handles &quot;South American capitals&quot; and &quot;WWI Western
                                         Front battlefields&quot; with no query-type branch.
                                     </li>
                                     <li>
                                         <strong className="text-foreground">Verification gate</strong>: before a
-                                        result reaches the map it&apos;s checked along independent axes &mdash; does
-                                        each row match the expected type, does the row count look sane, does a second
+                                        result reaches the map it&apos;s checked along independent axes: does each
+                                        row match the expected type, does the row count look sane, and does a second
                                         independent check on a sample hold up. A failed check triggers one bounded
-                                        repair pass; if it still can&apos;t be trusted, the result is downgraded and
-                                        visibly flagged, never silently dropped.
+                                        repair pass. If it still can&apos;t be trusted, the result gets downgraded and
+                                        flagged rather than dropped.
                                     </li>
                                     <li>
                                         <strong className="text-foreground">Two-axis trust model</strong>: every pin
@@ -423,14 +424,14 @@ export default function Home() {
                                     Live at{" "}
                                     <a href="https://wayfarer.wjleece.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
                                         wayfarer.wjleece.dev
-                                    </a>. The canonical test case &mdash; &quot;South American capitals&quot; &mdash;
-                                    returns every capital, none spurious, each with a verified coordinate and a
-                                    working source link. Harder multi-entity queries, like every member of a band&apos;s
+                                    </a>. The canonical test case, &quot;South American capitals&quot;, returns
+                                    every capital, none spurious, each with a verified coordinate and a working
+                                    source link. Harder multi-entity queries, like every member of a band&apos;s
                                     birthplace, run through the identical pipeline with no special-casing. When
                                     Wikidata has no structured answer for a subjective or very recent query, the app
-                                    falls back to the model&apos;s own knowledge rather than returning nothing &mdash;
-                                    but every one of those results is visibly labelled as unverified, not blended in
-                                    with the grounded ones.
+                                    falls back to the model&apos;s own knowledge instead of returning nothing, but
+                                    every one of those results is labelled as unverified rather than blended in with
+                                    the grounded ones.
                                 </p>
                             </div>
                         </div>

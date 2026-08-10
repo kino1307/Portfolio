@@ -76,12 +76,13 @@ export default function WayfarerPage() {
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground mb-4">The Problem</h2>
                         <p>
-                            I wanted a way to turn a plain-English question &mdash; &quot;South American capitals&quot;,
-                            &quot;Beatles birthplaces&quot; &mdash; into a map, without either hand-writing SPARQL
-                            against Wikidata for every query shape or trusting an LLM&apos;s raw output, which sounds
-                            just as confident whether or not it&apos;s actually right. Most &quot;ask an LLM to find
-                            some places&quot; demos skip the second half of that problem entirely: they show you a
-                            pin and never tell you whether it&apos;s real.
+                            I wanted a way to turn a plain-English question, something like &quot;South American
+                            capitals&quot; or &quot;Beatles birthplaces&quot;, into a map. The two obvious
+                            approaches both fall short: hand-writing SPARQL against Wikidata for every query shape
+                            doesn&apos;t scale, and trusting an LLM&apos;s raw output means it sounds just as
+                            confident whether or not it&apos;s actually right. Most &quot;ask an LLM to find some
+                            places&quot; demos skip that second half of the problem. They show you a pin and never
+                            tell you whether it&apos;s real.
                         </p>
                     </section>
 
@@ -101,8 +102,8 @@ export default function WayfarerPage() {
                                     how real instances are modelled, and builds and tests a SPARQL query live against
                                     Wikidata before it&apos;s ever proposed as an answer. The same code path handles
                                     &quot;South American capitals&quot; and &quot;WWI Western Front battlefields&quot;
-                                    with no query-type branch &mdash; a single-point capital and a multi-point
-                                    battlefield list go through identical logic.
+                                    with no query-type branch. A single-point capital and a multi-point battlefield
+                                    list go through identical logic.
                                 </p>
                             </div>
                             <div>
@@ -111,8 +112,8 @@ export default function WayfarerPage() {
                                     Before a result reaches the map it&apos;s checked along independent axes: does
                                     each row match the expected type, does the row count look sane, does a second,
                                     independent check on a sample of results hold up. A failed check triggers one
-                                    bounded repair pass; if the query still can&apos;t be trusted, the result is
-                                    downgraded rather than dropped &mdash; nothing vanishes silently.
+                                    bounded repair pass. If the query still can&apos;t be trusted, the result is
+                                    downgraded rather than dropped, so nothing vanishes silently.
                                 </p>
                             </div>
                             <div>
@@ -139,9 +140,9 @@ export default function WayfarerPage() {
                             <div>
                                 <h3 className="text-foreground font-semibold mb-1">Fallback, not failure</h3>
                                 <p>
-                                    If Wikidata has no structured answer for a query &mdash; subjective or very
-                                    recent topics &mdash; the app falls back to curated model knowledge instead of
-                                    returning nothing. Every result from that path is honestly labelled
+                                    If Wikidata has no structured answer for a query, usually a subjective or very
+                                    recent topic, the app falls back to curated model knowledge instead of returning
+                                    nothing. Every result from that path is honestly labelled
                                     &quot;model-suggested&quot;, never presented as grounded.
                                 </p>
                             </div>
@@ -150,8 +151,8 @@ export default function WayfarerPage() {
                                 <p>
                                     A cross-user result cache (24h TTL, keyed on query and model) serves repeat
                                     queries for free, since the underlying Wikidata data barely changes day to day.
-                                    The app ships as two Docker containers &mdash; an Express API and an nginx-served
-                                    Vite build &mdash; behind a Caddy reverse proxy.
+                                    The app ships as two Docker containers, an Express API and an nginx-served Vite
+                                    build, behind a Caddy reverse proxy.
                                 </p>
                             </div>
                         </div>
@@ -163,8 +164,8 @@ export default function WayfarerPage() {
                             Live at{" "}
                             <a href="https://wayfarer.wjleece.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
                                 wayfarer.wjleece.dev
-                            </a>. The canonical test case &mdash; &quot;South American capitals&quot; &mdash; returns
-                            every capital, none spurious, each with a verified coordinate and a working source link.
+                            </a>. The canonical test case, &quot;South American capitals&quot;, returns every
+                            capital, none spurious, each with a verified coordinate and a working source link.
                             Harder multi-entity queries, like every member of a band&apos;s birthplace, run through
                             the identical pipeline with no special-casing. The whole thing is BYOK: no account, no
                             server-side spend, just your own Anthropic or OpenAI key entered in the browser.

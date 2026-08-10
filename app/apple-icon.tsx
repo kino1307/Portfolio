@@ -12,16 +12,16 @@ export default function Icon() {
                     width: "100%",
                     height: "100%",
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "#6366f1",
-                    fontFamily: "sans-serif",
-                    fontWeight: 700,
-                    fontSize: 74,
-                    color: "#fff",
+                    gap: 14,
+                    background: "#000",
                 }}
             >
-                WL
+                <div style={{ width: 100, height: 22, borderRadius: 11, background: "#fff" }} />
+                <div style={{ width: 100, height: 22, borderRadius: 11, background: "#fff", opacity: 0.75 }} />
+                <div style={{ width: 100, height: 22, borderRadius: 11, background: "#fff", opacity: 0.5 }} />
             </div>
         ),
         { ...size }

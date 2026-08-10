@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#6366f1"/><text x="16" y="16" text-anchor="middle" dominant-baseline="central" font-family="system-ui,sans-serif" font-weight="700" font-size="13" fill="#fff">WL</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#000"/>
+  <rect x="8" y="9" width="16" height="4" rx="2" fill="#fff"/>
+  <rect x="9" y="15" width="16" height="4" rx="2" fill="#fff" opacity="0.75"/>
+  <rect x="10" y="21" width="16" height="4" rx="2" fill="#fff" opacity="0.5"/>
+</svg>

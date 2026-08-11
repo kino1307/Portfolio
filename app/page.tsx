@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { TechBadge } from "@/components/tech-badge";
 import { Sun, Moon, Mail, FileText, ChevronDown, ChevronUp } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
@@ -61,7 +62,7 @@ export default function Home() {
             "https://github.com/kino1307"
         ],
         "knowsAbout": [
-            "ASP.NET Core", "C#", ".NET", "Entity Framework Core",
+            "ASP.NET Core", "C#", "Dotnet", "Entity Framework Core",
             "Blazor", "SignalR", "SQL", "PostgreSQL",
             "Next.js", "React", "Tailwind CSS", "JavaScript", "TypeScript",
             "RESTful APIs", "Semantic Kernel", "AI Integration"
@@ -110,6 +111,7 @@ export default function Home() {
 
                 <Button
                     size="sm"
+                    variant="ghost"
                     onClick={() => setDarkMode(!darkMode)}
                     aria-label="Toggle dark mode"
                     className="ml-auto cursor-pointer"
@@ -122,7 +124,7 @@ export default function Home() {
             <section id="about" className="flex flex-col items-center justify-start text-center px-6 space-y-6 pt-32 md:pt-40" aria-label="About Me">
                 <h1 className="text-5xl md:text-7xl font-extrabold">I&apos;m Will Leece,</h1>
                 <p className="text-lg md:text-xl text-muted-foreground max-w-xl">
-                    a full-stack .NET developer based in the UK, currently building at Central Technology.
+                    a full-stack Dotnet developer based in the UK, currently building at Central Technology.
                 </p>
 
                 <div className="flex space-x-6 mt-4">
@@ -170,7 +172,7 @@ export default function Home() {
             <section id="skills" className="scroll-mt-20 max-w-4xl mx-auto px-6 py-12" aria-label="About and Skills">
                 <h2 className="text-3xl font-semibold mb-6 text-left">About</h2>
                 <p className="text-muted-foreground max-w-3xl">
-                    I specialise in real-time .NET systems, SignalR and multi-tenant dispatch, and in AI-output
+                    I specialise in real-time Dotnet systems, SignalR and multi-tenant dispatch, and in AI-output
                     verification: building independent QA and checks around LLM-generated content rather than
                     trusting model output directly.
                 </p>
@@ -213,13 +215,9 @@ export default function Home() {
                         A REST API that ingests medical data from MedlinePlus and PubMed, uses an LLM to classify and structure it into standardised medical categories, and serves it through a versioned interface refreshed daily. Nightly quality-control jobs check that AI-generated summaries haven&apos;t drifted from their source material and flag any that have for re-processing. Diagnosable topics are also cross-referenced against the WHO ICD-11 API and tagged with a real diagnostic code where a confident match exists.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">.NET 10</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Blazor Server</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">PostgreSQL</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Semantic Kernel</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Hangfire</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Railway</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">WHO ICD-11 API</span>
+                        {["Dotnet 10", "Blazor Server", "PostgreSQL", "Semantic Kernel", "Hangfire", "Railway", "WHO ICD-11 API"].map((tag) => (
+                            <TechBadge key={tag} tag={tag} />
+                        ))}
                     </div>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
                         <a href="https://meducateapi.com/docs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
@@ -268,7 +266,7 @@ export default function Home() {
                                 <p className="mb-3">
                                     Meducate follows Clean Architecture across four layers (Domain, Application,
                                     Infrastructure, and Presentation) so the data providers, LLM processor, and persistence
-                                    layer can each be replaced independently. It ships as a .NET 10 monolith on Railway,
+                                    layer can each be replaced independently. It ships as a Dotnet 10 monolith on Railway,
                                     which keeps operational complexity low while the product is early stage.
                                 </p>
                                 <ul className="list-disc list-inside space-y-2">
@@ -351,14 +349,9 @@ export default function Home() {
                         A natural-language query tool that plots results on a map, grounded in Wikidata rather than guessed by an LLM. An agent explores Wikidata&apos;s schema live and builds and tests a SPARQL query, then a verification gate checks the result against expected type, row count, and a second independent pass before anything reaches the map. Anything that can&apos;t be confirmed gets flagged in the UI instead of being blended in with the verified results.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-3">
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">React</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">TypeScript</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Vite</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Node.js / Express</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Wikidata SPARQL</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Leaflet</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Claude &amp; OpenAI APIs</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Docker</span>
+                        {["React", "TypeScript", "Vite", "Node.js / Express", "Wikidata SPARQL", "Leaflet", "Claude & OpenAI APIs", "Docker"].map((tag) => (
+                            <TechBadge key={tag} tag={tag} />
+                        ))}
                     </div>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
                         <a href="https://wayfarer.wjleece.dev" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">

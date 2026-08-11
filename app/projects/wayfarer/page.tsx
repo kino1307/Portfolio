@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { TechBadge } from "@/components/tech-badge";
 
 export const metadata: Metadata = {
     title: "Wayfarer — Wikidata-Grounded Map Query Tool Case Study | Will Leece",
@@ -76,12 +77,7 @@ export default function WayfarerPage() {
 
                 <div className="flex flex-wrap gap-2 mt-6 mb-12">
                     {["React", "TypeScript", "Vite", "Node.js / Express", "Wikidata SPARQL", "Leaflet", "Claude & OpenAI APIs", "Docker"].map((tag) => (
-                        <span
-                            key={tag}
-                            className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium"
-                        >
-                            {tag}
-                        </span>
+                        <TechBadge key={tag} tag={tag} />
                     ))}
                 </div>
 

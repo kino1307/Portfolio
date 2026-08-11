@@ -11,7 +11,6 @@ import {
     SiWikidata,
     SiLeaflet,
     SiDocker,
-    SiGithub,
     SiWorldhealthorganization,
 } from "react-icons/si";
 
@@ -51,6 +50,17 @@ function OpenAILogo({ className }: { className?: string }) {
     );
 }
 
+// Hangfire's own icon mark (the square glyph from the logo at hangfire.io/logo.svg, not their full
+// wordmark). No simple-icons entry exists for it, so it's reproduced from their site directly.
+function HangfireLogo({ className }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 615 615" className={className}>
+            <rect width="515" height="515" x="50" y="50" fill="currentColor" rx="50" ry="50" />
+            <path fill="#FCFCFD" d="M386 150h40v314h-40V321H228v143h-39V151h39v135h158z" />
+        </svg>
+    );
+}
+
 type TechIcon = { Icon: ElementType; className?: string };
 
 // Official brand hex verified against simple-icons/simple-icons data/simple-icons.json (source of truth,
@@ -58,14 +68,13 @@ type TechIcon = { Icon: ElementType; className?: string };
 // The badge pill background flips near-white <-> near-black between themes, so colors close in luminance
 // to one of those extremes (near-black Railway, dark purple Dotnet/Blazor, mid purple Vite, light cyan React)
 // get a theme-specific variant to stay legible; everything else has enough contrast against both.
-// Tools without their own mark (Semantic Kernel, Hangfire) fall back to the maintaining company's logo,
-// or GitHub's when there isn't a distinct company behind the project.
+// Semantic Kernel has no mark of its own, so it falls back to Microsoft's logo.
 export const TECH_ICONS: Record<string, TechIcon[]> = {
     "Dotnet 10": [{ Icon: SiDotnet, className: "text-[#512BD4] dark:text-[#8b7cf6]" }],
     "Blazor Server": [{ Icon: SiBlazor, className: "text-[#512BD4] dark:text-[#8b7cf6]" }],
     PostgreSQL: [{ Icon: SiPostgresql, className: "text-[#4169E1]" }],
     "Semantic Kernel": [{ Icon: MicrosoftLogo }],
-    Hangfire: [{ Icon: SiGithub, className: "text-[#8250df]" }],
+    Hangfire: [{ Icon: HangfireLogo, className: "text-[#2A4B7A] dark:text-[#5B8DC7]" }],
     Railway: [{ Icon: SiRailway, className: "text-[#0B0D0E] dark:text-white" }],
     "WHO ICD-11 API": [{ Icon: SiWorldhealthorganization, className: "text-[#0093D5]" }],
     React: [{ Icon: SiReact, className: "text-[#0891B2] dark:text-[#61DAFB]" }],

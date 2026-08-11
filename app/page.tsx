@@ -114,7 +114,7 @@ export default function Home() {
                     aria-label="Toggle dark mode"
                     className="ml-auto cursor-pointer"
                 >
-                    {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                    {darkMode ? <Sun className="w-5 h-5 text-[#f5a623]" /> : <Moon className="w-5 h-5 text-[#6366f1]" />}
                 </Button>
             </header>
 
@@ -128,7 +128,7 @@ export default function Home() {
                 <div className="flex space-x-6 mt-4">
                     <Button asChild size="sm" variant="ghost" aria-label="Email" className="cursor-pointer">
                         <a href="mailto:jamesleece24@gmail.com" rel="noopener noreferrer me">
-                            <Mail className="w-6 h-6" />
+                            <Mail className="w-6 h-6 text-[#EA4335] transition-opacity hover:opacity-80" />
                         </a>
                     </Button>
 
@@ -138,7 +138,7 @@ export default function Home() {
                             target="_blank"
                             rel="noopener noreferrer me"
                         >
-                            <FaLinkedin className="w-6 h-6" />
+                            <FaLinkedin className="w-6 h-6 text-[#0A66C2] transition-opacity hover:opacity-80" />
                         </a>
                     </Button>
 
@@ -148,7 +148,7 @@ export default function Home() {
                             target="_blank"
                             rel="noopener noreferrer me"
                         >
-                            <SiGithub className="w-6 h-6" />
+                            <SiGithub className="w-6 h-6 text-[#8250df] transition-opacity hover:opacity-80" />
                         </a>
                     </Button>
 
@@ -226,7 +226,7 @@ export default function Home() {
                             Try with demo key →
                         </a>
                         <a href="https://github.com/kino1307/MeducateAPI" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-1">
-                            <SiGithub className="w-3.5 h-3.5" /> GitHub
+                            <SiGithub className="w-3.5 h-3.5 text-[#8250df] transition-opacity hover:opacity-80" /> GitHub
                         </a>
                         <span className="text-sm text-muted-foreground">Free tier: 1,000 req/day · no credit card</span>
                     </div>
@@ -364,8 +364,8 @@ export default function Home() {
                         <a href="https://wayfarer.wjleece.dev" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
                             Try it live →
                         </a>
-                        <a href="https://github.com/kino1307/wayfarer" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-1">
-                            <SiGithub className="w-3.5 h-3.5" /> GitHub
+                        <a href="https://github.com/kino1307/Wayfarer" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-1">
+                            <SiGithub className="w-3.5 h-3.5 text-[#8250df] transition-opacity hover:opacity-80" /> GitHub
                         </a>
                         <span className="text-sm text-muted-foreground">BYOK &middot; bring your own Anthropic or OpenAI key, nothing stored server-side</span>
                     </div>

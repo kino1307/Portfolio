@@ -54,7 +54,7 @@ Everything visible to a visitor lives in `app/page.tsx`. If a task touches conte
 - Card CTA: "Try with demo key →" → meducateapi.com/docs
 
 ### Wayfarer
-- Live at wayfarer.wjleece.dev, GitHub: github.com/kino1307/wayfarer
+- Live at wayfarer.wjleece.dev, GitHub: github.com/kino1307/Wayfarer
 - Natural-language query → map, grounded in Wikidata (not guessed by an LLM)
 - Key technical differentiator: an agent reads Wikidata's schema live and builds/tests SPARQL at query time (no fixed template library), gated by an independent verification pass before anything reaches the map
 - BYOK: no server-side LLM key, users bring their own Anthropic or OpenAI key

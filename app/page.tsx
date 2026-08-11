@@ -26,13 +26,21 @@ export default function Home() {
 
     const experience = [
         {
-            years: "2022 – Present",
-            role: "Full-Stack Developer at Central Technology",
+            years: "Feb 2025 – Present",
+            role: "Dotnet Developer at Central Technology",
+            location: "Chesterfield, UK",
             desc: [
-                "Build bespoke features across internal and customer-facing CRUD applications using ASP.NET Core, C#, and EF Core.",
                 "Develop live, interactive wallboards powered by SignalR for real-time operational visibility.",
-                "Implement AI automation with Semantic Kernel inside an agent architecture built on vertical slicing and shared context files.",
-                "Author bespoke reports for recurring operational issues and data forensics that turn manual investigation into repeatable tooling."
+                "Implement AI automation with Semantic Kernel inside an agent architecture built on vertical slicing and shared context files."
+            ]
+        },
+        {
+            years: "Oct 2022 – Feb 2025",
+            role: "Junior Dotnet Developer at Central Technology",
+            location: "Chesterfield, UK",
+            desc: [
+                "Built bespoke features across internal and customer-facing CRUD applications using ASP.NET Core, C#, and EF Core.",
+                "Authored bespoke reports for recurring operational issues and data forensics that turn manual investigation into repeatable tooling."
             ]
         }
     ];
@@ -146,7 +154,7 @@ export default function Home() {
 
                     <Button asChild size="sm" variant="ghost" aria-label="Resume" className="cursor-pointer">
                         <a
-                            href="https://docs.google.com/document/d/1SGn8VAhru0A5axskslH_GiMxXgdRFUESglmBTibn4Qs/export?format=pdf"
+                            href="/cv.pdf"
                             target="_blank"
                             rel="noopener noreferrer me"
                         >
@@ -154,6 +162,18 @@ export default function Home() {
                         </a>
                     </Button>
                 </div>
+            </section>
+
+            <div className="my-16"></div>
+
+            {/* About Section */}
+            <section id="skills" className="scroll-mt-20 max-w-4xl mx-auto px-6 py-12" aria-label="About and Skills">
+                <h2 className="text-3xl font-semibold mb-6 text-left">About</h2>
+                <p className="text-muted-foreground max-w-3xl">
+                    I specialise in real-time .NET systems, SignalR and multi-tenant dispatch, and in AI-output
+                    verification: building independent QA and checks around LLM-generated content rather than
+                    trusting model output directly.
+                </p>
             </section>
 
             <div className="my-16"></div>
@@ -167,6 +187,7 @@ export default function Home() {
                             <span className="text-muted-foreground w-32 md:w-40 flex-shrink-0">{exp.years}</span>
                             <div>
                                 <h3 className="font-semibold">{exp.role}</h3>
+                                <p className="text-sm text-muted-foreground">{exp.location}</p>
                                 <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
                                     {exp.desc.map((item, i) => (
                                         <li key={i}>{item}</li>
@@ -336,7 +357,7 @@ export default function Home() {
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Node.js / Express</span>
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Wikidata SPARQL</span>
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Leaflet</span>
-                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Claude &amp; GPT-5.6</span>
+                        <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Claude &amp; OpenAI APIs</span>
                         <span className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium">Docker</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">

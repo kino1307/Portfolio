@@ -75,7 +75,7 @@ export default function WayfarerPage() {
                 </a>
 
                 <div className="flex flex-wrap gap-2 mt-6 mb-12">
-                    {["React", "TypeScript", "Vite", "Node.js / Express", "Wikidata SPARQL", "Leaflet", "Claude & GPT-5.6", "Docker"].map((tag) => (
+                    {["React", "TypeScript", "Vite", "Node.js / Express", "Wikidata SPARQL", "Leaflet", "Claude & OpenAI APIs", "Docker"].map((tag) => (
                         <span
                             key={tag}
                             className="rounded-full bg-secondary text-secondary-foreground px-3 py-1 text-xs font-medium"
